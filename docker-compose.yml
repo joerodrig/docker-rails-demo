@@ -5,10 +5,10 @@ services:
     ports:
       - 5432:5432
   build-app:
-    image: docker-rails-demo:1.0
+    image: docker-rails-demo:0.1
     build: .
   webpacker:
-    image: docker-rails-demo:1.0
+    image: docker-rails-demo:0.1
     command: bundle exec bin/webpack-dev-server
     environment:
       - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
