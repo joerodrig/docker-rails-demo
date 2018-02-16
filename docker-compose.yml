@@ -1,0 +1,32 @@
+version: '3.2'
+services:
+  db:
+    image: postgres:9.6-alpine
+    ports:
+      - 5432:5432
+  build-app:
+    image: docker-rails-demo:1.0
+    build: .
+  webpacker:
+    image: docker-rails-demo:1.0
+    command: bundle exec bin/webpack-dev-server
+    environment:
+      - WEBPACKER_DEV_SERVER_HOST=0.0.0.0
+    volumes:
+      - /tmp/docker:/app
+    ports:
+      - 8080:8080
+  web:
+    image: docker-rails-demo:1.0
+    command: puma -C config/puma.rb
+    working_dir: /tmp/docker
+    environment:
+      - RAILS_ENV=development
+      - WEBPACKER_DEV_SERVER_HOST=webpacker
+    volumes:
+      - /tmp/docker:/app
+    ports:
+      - 3000:3000
+    depends_on:
+      - db
+      - webpacker
