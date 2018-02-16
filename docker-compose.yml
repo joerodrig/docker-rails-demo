@@ -17,7 +17,7 @@ services:
     ports:
       - 8080:8080
   web:
-    image: docker-rails-demo:1.0
+    image: docker-rails-demo:0.1
     command: puma -C config/puma.rb
     working_dir: /tmp/docker
     environment:
